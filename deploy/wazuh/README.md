@@ -24,6 +24,16 @@ For Windows persistence practice, enable the Task Scheduler Operational channel 
 
 The channel is disabled by default on some Windows installations. Enable it before testing scheduled-task detections, then restart the Wazuh agent so the new input is active.
 
+The lab's Sysmon filter also keeps process creation focused on high-value interpreters and selected trusted tooling. The Claude correlation improvement is a single additional image condition:
+
+~~~xml
+<ProcessCreate onmatch="include">
+  <Image condition="end with">\claude.exe</Image>
+</ProcessCreate>
+~~~
+
+Keep the complete host-specific Sysmon configuration outside the public repository; review signer and hash evidence before adding any executable to this focused list.
+
 Keep Wazuh certificates, passwords, API credentials, index data, and generated alerts on the host. They are intentionally absent from this repository.
 
 The rule set includes low-noise Sysmon telemetry, focused PowerShell detections, and application rules for SIAS, Supabase, and Vercel. Review and adapt rule IDs to the Wazuh version running in your lab.
