@@ -1,5 +1,7 @@
 # SOC Lab Portfolio
 
+[![Public safety scan](https://github.com/KubixDesiney/soc-lab-portfolio/actions/workflows/public-safety.yml/badge.svg)](https://github.com/KubixDesiney/soc-lab-portfolio/actions/workflows/public-safety.yml)  [![Collector self-tests](https://github.com/KubixDesiney/soc-lab-portfolio/actions/workflows/collector-self-test.yml/badge.svg)](https://github.com/KubixDesiney/soc-lab-portfolio/actions/workflows/collector-self-test.yml)
+
 A small, reproducible security operations lab built for hands-on detection, triage, and incident response practice.
 
 The lab uses Wazuh as the primary collector and detection engine. Sysmon supplies Windows process, network, file, registry, and DNS telemetry. Small pull-only collectors normalize SIAS, Supabase, and Vercel telemetry into a stable JSON event envelope. Splunk consumes only the de-duplicated high-severity handoff so it can be used for SPL searches, dashboards, and reporting without duplicating the complete Wazuh stream.
@@ -66,3 +68,4 @@ This is a learning lab, not a production SOC. The case notes show the reasoning 
 - docs/interview-walkthrough.md is a short live-demo script.
 - docs/resume-ready-bullets.md contains project bullets that match the implementation.
 - docs/portfolio-checklist.md covers the evidence to show in a review.
+
