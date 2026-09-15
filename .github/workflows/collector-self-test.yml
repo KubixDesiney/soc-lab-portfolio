@@ -22,3 +22,5 @@ jobs:
           python collectors/sias_collector.py --self-test
           python collectors/supabase_collector.py --self-test
           python collectors/vercel_collector.py --self-test
+          python -m unittest discover -s tests -v
+

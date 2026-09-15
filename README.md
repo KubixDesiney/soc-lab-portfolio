@@ -69,3 +69,10 @@ This is a learning lab, not a production SOC. The case notes show the reasoning 
 - docs/resume-ready-bullets.md contains project bullets that match the implementation.
 - docs/portfolio-checklist.md covers the evidence to show in a review.
 
+
+## Operational maturity
+
+- docs/detection-catalog.md maps the local rule set to behaviors and MITRE techniques.
+- docs/incident-response-playbook.md describes identification, containment, recovery, and closure.
+- tests/test_collectors.py verifies normalization and credential redaction without network access.
+- .github/workflows/collector-self-test.yml runs the same checks on every change.

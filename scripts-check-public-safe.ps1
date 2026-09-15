@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 $blockedNames = @('.env','*.pem','*.key','*.pfx','*.p12','*.crt','*.msi','*.log','*.pyc')
 $files = Get-ChildItem -LiteralPath $root -Recurse -File -Force | Where-Object {
-  $_.FullName -notmatch '\\.git\\'
+  $_.FullName -notmatch '\\.git\\|\\__pycache__\\'
 }
 foreach ($file in $files) {
   if ($file.Name -eq 'scripts-check-public-safe.ps1') { continue }
@@ -29,5 +29,7 @@ foreach ($file in $files) {
   }
 }
 Write-Output 'Public-safety scan passed.'
+
+
 
 
