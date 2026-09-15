@@ -1,6 +1,6 @@
 # Executable-drop alert triage: temporary Claude cache
 
-Status: benign-likely, pending signer and hash confirmation
+Status: benign-likely, pending signer and hash confirmation; telemetry improvements applied
 
 ## Alert
 
@@ -23,11 +23,17 @@ index=main sourcetype=soc:wazuh:alert rule_id=92213 "cache-break-state-adb68068"
 | table _time agent agent_id rule_id rule_level rule_description image alert_key
 ```
 
-Splunk returned the alert key and rule metadata. The target path was searchable in the raw event but was not extracted into the `targetFilename` field, which is a data-model improvement to address.
+Splunk returned the alert key, rule metadata, and—after the extraction update—the full `targetFilename` value. The field is populated from the collector's normalized `target` value so existing events remain searchable.
 
 ## Assessment
 
-The alert is benign-likely because the image is a known local Claude installation and the target is a short-lived JSON cache file with a temporary suffix. This is an assessment, not proof of safety. The current Sysmon process filter does not collect `claude.exe` process creation, so a parent-process correlation was unavailable for this event.
+The alert is benign-likely because the image is a known local Claude installation and the target is a short-lived JSON cache file with a temporary suffix. This is an assessment, not proof of safety. Parent-process correlation was unavailable for this historical event because the filter was not yet collecting `claude.exe` process creation.
+
+## Remediation applied
+
+- Splunk search-time extraction now exposes `targetFilename` while retaining `target` for compatibility.
+- The high-severity watcher emits both fields for new alerts.
+- Sysmon now collects process creation for `claude.exe` so future alerts can be correlated with the creating process.
 
 ## Analyst decisions
 
@@ -39,4 +45,4 @@ The alert is benign-likely because the image is a known local Claude installatio
 
 ## Disposition
 
-Close as `benign-likely / monitor` pending signer and hash checks. Track the missing `targetFilename` extraction and missing `claude.exe` process correlation as telemetry improvements rather than weakening the detection rule.
+Close as `benign-likely / monitor` pending signer and hash checks. Keep rule `92213` enabled and reassess only after the new process correlation is observed on a future event.

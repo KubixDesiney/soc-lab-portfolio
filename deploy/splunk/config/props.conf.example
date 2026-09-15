@@ -5,6 +5,7 @@ LINE_BREAKER = ([
 ]+)
 TRUNCATE = 0
 KV_MODE = json
+EVAL-targetFilename = coalesce(targetFilename, target)
 TIME_PREFIX = "timestamp"s*:s*"
 TIME_FORMAT = %m/%d/%Y %H:%M:%S
 MAX_TIMESTAMP_LOOKAHEAD = 20

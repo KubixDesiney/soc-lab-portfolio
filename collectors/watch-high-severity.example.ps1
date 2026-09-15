@@ -73,6 +73,7 @@ foreach ($hit in $response.hits.hits) {
     route = [string]$s.data.route
     deployment_url = [string]$s.data.deployment_url
     image = [string]$win.eventdata.image
+    targetFilename = [string]$win.eventdata.targetFilename
     target = [string]$win.eventdata.targetFilename
     script_block = [string]$win.eventdata.scriptBlockText
   })
