@@ -60,3 +60,9 @@ Do not expose a live Wazuh or Splunk console to the public internet. Screenshots
 
 This is a learning lab, not a production SOC. The case notes show the reasoning an analyst uses: validate the alert, identify the process or application context, correlate nearby telemetry, assess impact, and record a disposition.
 
+
+## Interview materials
+
+- docs/interview-walkthrough.md is a short live-demo script.
+- docs/resume-ready-bullets.md contains project bullets that match the implementation.
+- docs/portfolio-checklist.md covers the evidence to show in a review.
