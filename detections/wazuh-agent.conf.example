@@ -1,0 +1,7 @@
+<agent_config>
+  <localfile>
+    <location>C:\SOC-Lab\events\*.json</location>
+    <log_format>json</log_format>
+    <only-future-events>no</only-future-events>
+  </localfile>
+</agent_config>

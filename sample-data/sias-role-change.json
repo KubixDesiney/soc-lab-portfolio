@@ -1,0 +1,1 @@
+{"schema_version":"1.0","event_id":"sias-demo-role-change-001","event_time":"2026-01-15T12:00:00.000Z","source":"sias","environment":"development","event_type":"account.role_change","action":"account.role_change","outcome":"failure","severity":"high","actor_id":"demo-operator","target_type":"user","target_id":"demo-user"}

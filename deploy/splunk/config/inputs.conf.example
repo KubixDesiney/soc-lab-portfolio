@@ -1,0 +1,6 @@
+# Monitor only the local, de-duplicated high-severity handoff.
+[monitor:///soc-live/high-severity.ndjson]
+disabled = 0
+index = main
+sourcetype = soc:wazuh:alert
+crcSalt = <SOURCE>

@@ -1,0 +1,19 @@
+services:
+  splunk:
+    image: splunk/splunk:10.4.3
+    container_name: soc-splunk
+    hostname: soc-splunk
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      SPLUNK_START_ARGS: --accept-license
+      SPLUNK_GENERAL_TERMS: --accept-sgt-current-at-splunk-com
+      SPLUNK_LICENSE_URI: Free
+      SPLUNK_PASSWORD: ${SPLUNK_PASSWORD}
+    volumes:
+      - splunk-data:/opt/splunk/var
+      - ./live:/soc-live:ro
+
+volumes:
+  splunk-data:

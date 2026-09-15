@@ -1,0 +1,10 @@
+# Copy into Splunk props.conf on the search/index tier.
+[soc:wazuh:alert]
+SHOULD_LINEMERGE = false
+LINE_BREAKER = ([
+]+)
+TRUNCATE = 0
+KV_MODE = json
+TIME_PREFIX = "timestamp"s*:s*"
+TIME_FORMAT = %m/%d/%Y %H:%M:%S
+MAX_TIMESTAMP_LOOKAHEAD = 20

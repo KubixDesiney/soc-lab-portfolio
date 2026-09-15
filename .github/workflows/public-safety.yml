@@ -1,0 +1,17 @@
+name: Public safety scan
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check repository contents
+        shell: pwsh
+        run: ./scripts-check-public-safe.ps1

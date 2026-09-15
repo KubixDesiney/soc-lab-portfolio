@@ -1,0 +1,32 @@
+# Credentials and private material
+.env
+*.env
+*.pem
+*.key
+*.pfx
+*.p12
+*.crt
+*secret*
+*credential*
+*password*
+*token*
+
+# Runtime state and generated telemetry
+live/
+runtime/
+state/
+events/
+*.ndjson
+*.log
+__pycache__/
+*.pyc
+
+# Installer and local infrastructure data
+*.msi
+*.iso
+splunk-data/
+wazuh-data/
+indexer-certs/
+*.pid
+.DS_Store
+Thumbs.db

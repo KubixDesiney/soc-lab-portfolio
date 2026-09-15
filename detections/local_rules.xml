@@ -1,0 +1,197 @@
+<!-- Local rules -->
+<group name="local,syslog,sshd,">
+  <rule id="100001" level="5">
+    <if_sid>5716</if_sid>
+    <srcip>1.1.1.1</srcip>
+    <description>sshd: authentication failed from IP 1.1.1.1.</description>
+    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,</group>
+  </rule>
+</group>
+
+<!-- Keep known Git/Codex documentation copies visible without treating JSON as a dropped executable. -->
+<group name="windows,sysmon,soc_training,">
+  <rule id="100523" level="3">
+    <if_sid>92213</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\Program Files\\Git\\usr\\bin\\cp\.exe$</field>
+    <field name="win.eventdata.targetFilename" type="pcre2">(?i)\\AppData\\Local\\Temp\\tmp\.[^\\]+\\docs\\.*\.json$</field>
+    <description>Known Git/Codex temporary JSON copy; retain as low-severity telemetry.</description>
+    <group>sysmon,soc_training,known_benign,</group>
+  </rule>
+</group>
+
+<!-- Promote selected Sysmon telemetry into searchable Wazuh alerts for SOC training. -->
+<group name="windows,sysmon,soc_training,">
+  <rule id="100516" level="3">
+    <if_sid>61603</if_sid>
+    <description>Sysmon process creation observed on a Windows endpoint.</description>
+    <group>sysmon,sysmon_process_creation,</group>
+  </rule>
+  <rule id="100517" level="3">
+    <if_sid>61605</if_sid>
+    <description>Sysmon network connection observed on a Windows endpoint.</description>
+    <group>sysmon,sysmon_network_connection,</group>
+  </rule>
+  <rule id="100518" level="3">
+    <if_sid>61613</if_sid>
+    <description>Sysmon file creation observed on a Windows endpoint.</description>
+    <group>sysmon,sysmon_file_creation,</group>
+  </rule>
+  <rule id="100519" level="3">
+    <if_sid>61614</if_sid>
+    <description>Sysmon registry activity observed on a Windows endpoint.</description>
+    <group>sysmon,sysmon_registry,</group>
+  </rule>
+  <rule id="100520" level="3">
+    <if_sid>61650</if_sid>
+    <description>Sysmon DNS query observed on a Windows endpoint.</description>
+    <group>sysmon,sysmon_dns,</group>
+  </rule>
+</group>
+
+<!-- Focused PowerShell behavior rule for SOC training. -->
+<group name="windows,sysmon,powershell,soc_training,">
+  <rule id="100521" level="12">
+    <if_sid>100516</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\(powershell|pwsh)\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(-enc(?:odedcommand)?\s+[A-Za-z0-9+/]{20,}={0,2}\b|frombase64string|downloadstring|invoke-expression|\biex\b|\biwr\b|\birm\b|-windowstyle\s+hidden|-w\s+hidden)</field>
+    <description>PowerShell launched with an encoded or commonly obfuscated command pattern.</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+    <group>sysmon,powershell,powershell_suspicious,command_execution,</group>
+  </rule>
+</group>
+
+<!-- Promote high-risk PowerShell script-block patterns for SOC training. -->
+<group name="windows,powershell,script_block,soc_training,">
+  <rule id="100522" level="12">
+    <if_sid>91802</if_sid>
+    <field name="win.eventdata.scriptBlockText" type="pcre2">(?i)(invoke-expression|\biex\b|downloadstring|downloadfile|frombase64string|net\.webclient|start-bitstransfer|invoke-webrequest|add-mppreference)</field>
+    <description>PowerShell script block contains a high-risk execution, download, or defense-evasion pattern.</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1105</id>
+    </mitre>
+    <group>powershell,script_block,powershell_suspicious,command_execution,</group>
+  </rule>
+</group>
+
+<!-- Supabase operational telemetry rules for the KubixDesiney-Hub backend. -->
+<group name="supabase,application_monitoring,">
+  <rule id="100511" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="source" type="pcre2">supabase</field>
+    <description>Supabase operational telemetry event.</description>
+    <group>supabase_event,</group>
+  </rule>
+  <rule id="100512" level="8">
+    <if_sid>100511</if_sid>
+    <field name="outcome" type="pcre2">^(failure|failed|denied|error)$</field>
+    <description>Supabase backend reported an agent or notification failure.</description>
+    <group>supabase_failure,application_error,</group>
+  </rule>
+  <rule id="100513" level="12">
+    <if_sid>100511</if_sid>
+    <field name="severity" type="pcre2">^(critical|high)$</field>
+    <description>Supabase backend reported a high-severity operational event.</description>
+    <group>supabase_high_severity,application_error,</group>
+  </rule>
+</group>
+
+<!-- Fallback for Supabase JSON events decoded by the built-in JSON rule first. -->
+<group name="supabase,application_monitoring,">
+  <rule id="100514" level="8">
+    <if_sid>1002</if_sid>
+    <field name="source" type="pcre2">supabase</field>
+    <field name="outcome" type="pcre2">^(failure|failed|denied|error)$</field>
+    <description>Supabase backend reported an agent or notification failure.</description>
+    <group>supabase_failure,application_error,</group>
+  </rule>
+  <rule id="100515" level="12">
+    <if_sid>100514</if_sid>
+    <field name="severity" type="pcre2">^(critical|high)$</field>
+    <description>Supabase backend reported a high-severity operational event.</description>
+    <group>supabase_high_severity,application_error,</group>
+  </rule>
+</group>
+
+<!-- Vercel runtime telemetry rules for the KubixDesiney-Hub application. -->
+<group name="vercel,application_monitoring,">
+  <rule id="100506" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="source" type="pcre2">vercel</field>
+    <description>Vercel application runtime telemetry event.</description>
+    <group>vercel_event,</group>
+  </rule>
+  <rule id="100507" level="8">
+    <if_sid>100506</if_sid>
+    <field name="outcome" type="pcre2">^(failure|failed|denied|error)$</field>
+    <description>Vercel runtime reported an error or failed request.</description>
+    <group>vercel_failure,application_error,</group>
+  </rule>
+  <rule id="100508" level="12">
+    <if_sid>100506</if_sid>
+    <field name="severity" type="pcre2">^(critical|high)$</field>
+    <description>Vercel runtime reported a high-severity application error.</description>
+    <group>vercel_high_severity,application_error,</group>
+  </rule>
+</group>
+
+<!-- SIAS application telemetry rules for the local SOC lab. -->
+<group name="sias,application_monitoring,">
+  <rule id="100501" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="source" type="pcre2">sias</field>
+    <description>SIAS application telemetry event.</description>
+    <group>sias_event,</group>
+  </rule>
+  <rule id="100502" level="8">
+    <if_sid>100501</if_sid>
+    <field name="outcome" type="pcre2">^(failure|failed|denied|error)$</field>
+    <description>SIAS application event reported a failed or denied outcome.</description>
+    <group>sias_failure,authentication_failed,</group>
+  </rule>
+  <rule id="100503" level="12">
+    <if_sid>100501</if_sid>
+    <field name="severity" type="pcre2">^(critical|high)$</field>
+    <description>SIAS application telemetry reported a high-severity event.</description>
+    <group>sias_high_severity,</group>
+  </rule>
+</group>
+
+<!-- Fallback for Vercel JSON events decoded by the built-in JSON rule first. -->
+<group name="vercel,application_monitoring,">
+  <rule id="100509" level="8">
+    <if_sid>1002</if_sid>
+    <field name="source" type="pcre2">vercel</field>
+    <field name="outcome" type="pcre2">^(failure|failed|denied|error)$</field>
+    <description>Vercel runtime reported an error or failed request.</description>
+    <group>vercel_failure,application_error,</group>
+  </rule>
+  <rule id="100510" level="12">
+    <if_sid>100509</if_sid>
+    <field name="severity" type="pcre2">^(critical|high)$</field>
+    <description>Vercel runtime reported a high-severity application error.</description>
+    <group>vercel_high_severity,application_error,</group>
+  </rule>
+</group>
+
+
+
+
+
+<!-- JSON events containing generic syslog error words can hit rule 1002 first. -->
+<group name="sias,application_monitoring,">
+  <rule id="100504" level="8">
+    <if_sid>1002</if_sid>
+    <field name="source" type="pcre2">sias</field>
+    <description>SIAS application event reported a failed or denied outcome.</description>
+    <group>sias_failure,authentication_failed,</group>
+  </rule>
+  <rule id="100505" level="12">
+    <if_sid>100504</if_sid>
+    <field name="severity" type="pcre2">^(critical|high)$</field>
+    <description>SIAS application telemetry reported a high-severity event.</description>
+    <group>sias_high_severity,</group>
+  </rule>
+</group>

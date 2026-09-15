@@ -1,0 +1,49 @@
+<dashboard version="1.1" theme="light">
+  <label>SOC - Wazuh Overview</label>
+  <description>Local SOC view of de-duplicated high-severity Wazuh alerts.</description>
+  <row>
+    <panel>
+      <title>Alerts by rule (last 24 hours)</title>
+      <table>
+        <search>
+          <query>index=main sourcetype=soc:wazuh:alert | stats count by rule_id rule_level rule_description | sort - count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">row</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Alert trend</title>
+      <chart>
+        <search>
+          <query>index=main sourcetype=soc:wazuh:alert | timechart span=30m count by rule_id</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Alerts</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Recent high-severity alerts</title>
+      <table>
+        <search>
+          <query>index=main sourcetype=soc:wazuh:alert | sort - _time | table _time timestamp agent agent_id rule_id rule_level rule_description image script_block</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">row</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>
