@@ -24,6 +24,10 @@ Target: `soc-sim-target`
 4. The high-severity watcher forwarded the alert to Splunk with sourcetype `soc:wazuh:alert`.
 5. Splunk search confirmed the same event ID and rule metadata.
 
+## SIAS authorization check
+
+One unauthenticated `POST {}` was sent to the deployed Firebase `audit_log` endpoint as a negative control. SIAS returned HTTP `401` with `Permission denied`; no audit record was created. This confirms the audit stream is not anonymously writable.
+
 Wazuh evidence:
 
 - Rule: `100503`
