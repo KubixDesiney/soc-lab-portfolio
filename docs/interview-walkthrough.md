@@ -28,7 +28,11 @@ Open the local SOC - Wazuh Overview dashboard. Show alert counts by rule, the tr
 
 Open cases/sysmon-dropped-file.md. Explain why the original file-drop rule was noisy and how the child rule narrowed the known Git documentation workflow while preserving coverage for executable targets.
 
-## 6. State the security boundaries
+## 6. Demonstrate cross-source correlation
+
+Open cases/sias-vercel-correlation.md. Explain how a failed SIAS role-change and a Vercel runtime error shared a synthetic producer time, were detected by rules 100503 and 100508, and were searched together in Splunk. Call out the difference between producer time and Wazuh ingestion time, then show the explicit closed disposition.
+
+## 7. State the security boundaries
 
 Credentials, certificates, raw alerts, generated state, and production telemetry remain on the local host. The public repository contains examples and synthetic data only. The public-safety workflow and GitHub secret scanning protect future changes.
 
@@ -38,3 +42,4 @@ Credentials, certificates, raw alerts, generated state, and production telemetry
 - How would you escalate the PowerShell alert? Recover the full command, inspect process lineage and user context, check network and persistence activity, then contain only when evidence supports it.
 - How do you avoid false positives? Use narrow behavioral conditions and correlation, then document the tuning decision.
 - How are cloud credentials protected? Read-only tokens are supplied at runtime from protected local files and never written to Git or event output.
+
