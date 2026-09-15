@@ -72,7 +72,14 @@ foreach ($hit in $response.hits.hits) {
     producer_time = [string]$s.data.event_time
     route = [string]$s.data.route
     deployment_url = [string]$s.data.deployment_url
+    win_event_id = [string]$win.system.eventID
+    win_channel = [string]$win.system.channel
     image = [string]$win.eventdata.image
+    process_guid = [string]$win.eventdata.processGuid
+    process_id = [string]$win.eventdata.processId
+    parent_image = [string]$win.eventdata.parentImage
+    command_line = [string]$win.eventdata.commandLine
+    user = [string]$win.eventdata.user
     targetFilename = [string]$win.eventdata.targetFilename
     target = [string]$win.eventdata.targetFilename
     script_block = [string]$win.eventdata.scriptBlockText

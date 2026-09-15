@@ -35,7 +35,23 @@
       <title>Open triage queue (non-synthetic, level 12+)</title>
       <table>
         <search>
-          <query>index=main sourcetype=soc:wazuh:alert | spath input=_raw path=source output=event_source | eval event_source=coalesce(event_source,"endpoint") | eval lab_text=lower(coalesce(event_id,"")." ".coalesce(message,"")." ".coalesce(script_block,"")) | where rule_level&gt;=12 AND NOT match(lab_text,"synthetic|selftest|correlation|lab[-_ ]|watcher[-_ ]test|live[-_]bridge") | eval event_key=if(isnull(event_id) OR event_id="",alert_key,event_id) | dedup event_key | eval script_preview=if(len(script_block)>240,substr(script_block,1,240)."...",script_block) | sort - _time | table _time timestamp event_source event_id event_type outcome severity message agent agent_id rule_id rule_level rule_description image script_preview</query>
+          <query>index=main sourcetype=soc:wazuh:alert | spath input=_raw path=source output=event_source | eval event_source=coalesce(event_source,"endpoint") | eval lab_text=lower(coalesce(event_id,"")." ".coalesce(message,"")." ".coalesce(script_block,"")) | where rule_level&gt;=12 AND NOT match(lab_text,"synthetic|selftest|correlation|lab[-_ ]|watcher[-_ ]test|live[-_]bridge") | eval event_key=if(isnull(event_id) OR event_id="",alert_key,event_id) | dedup event_key | eval script_preview=if(len(script_block)>240,substr(script_block,1,240)."...",script_block) | sort - _time | table _time timestamp event_source event_id event_type outcome severity message agent agent_id rule_id rule_level rule_description image targetFilename process_guid process_id parent_image command_line user script_preview</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">row</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Executable-drop context (rule 92213)</title>
+      <table>
+        <search>
+          <query>index=main sourcetype=soc:wazuh:alert rule_id=92213 | eval path=coalesce(targetFilename,target) | stats min(_time) as first_seen max(_time) as last_seen count values(path) as targetFilename values(image) as image values(process_guid) as process_guid values(process_id) as process_id values(parent_image) as parent_image values(command_line) as command_line values(user) as user by alert_key agent agent_id rule_id rule_level rule_description | sort - last_seen | table first_seen last_seen count agent agent_id rule_id rule_level rule_description image targetFilename process_guid process_id parent_image command_line user alert_key</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
@@ -51,7 +67,7 @@
       <title>Recent high-severity alerts</title>
       <table>
         <search>
-          <query>index=main sourcetype=soc:wazuh:alert | sort - _time | table _time timestamp agent agent_id rule_id rule_level rule_description image script_block</query>
+          <query>index=main sourcetype=soc:wazuh:alert | sort - _time | table _time timestamp agent agent_id rule_id rule_level rule_description image targetFilename process_guid process_id parent_image command_line user script_block</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
