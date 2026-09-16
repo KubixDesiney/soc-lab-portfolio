@@ -28,7 +28,9 @@ $body = @{
     '@timestamp', 'timestamp', 'agent.name', 'agent.id', 'rule.id', 'rule.level',
     'rule.description', 'data.source', 'data.event_id', 'data.event_type',
     'data.action', 'data.outcome', 'data.severity', 'data.message',
-    'data.event_time', 'data.route', 'data.deployment_url', 'data.win'
+    'data.event_time', 'data.route', 'data.deployment_url', 'data.win',
+    'data.reason', 'data.fingerprint', 'data.count', 'data.window_min',
+    'data.payload_bytes', 'data.payload_limit', 'data.matched_pattern', 'data.simulation'
   )
 } | ConvertTo-Json -Depth 20
 
@@ -72,6 +74,14 @@ foreach ($hit in $response.hits.hits) {
     producer_time = [string]$s.data.event_time
     route = [string]$s.data.route
     deployment_url = [string]$s.data.deployment_url
+    reason = [string]$s.data.reason
+    fingerprint = [string]$s.data.fingerprint
+    count = if ($null -ne $s.data.count) { [int]$s.data.count } else { $null }
+    window_min = if ($null -ne $s.data.window_min) { [int]$s.data.window_min } else { $null }
+    payload_bytes = if ($null -ne $s.data.payload_bytes) { [int]$s.data.payload_bytes } else { $null }
+    payload_limit = if ($null -ne $s.data.payload_limit) { [int]$s.data.payload_limit } else { $null }
+    matched_pattern = [string]$s.data.matched_pattern
+    simulation = [string]$s.data.simulation
     win_event_id = [string]$win.system.eventID
     win_channel = [string]$win.system.channel
     image = [string]$win.eventdata.image
