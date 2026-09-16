@@ -29,7 +29,7 @@ $body = @{
     'rule.description', 'data.source', 'data.event_id', 'data.event_type',
     'data.action', 'data.outcome', 'data.severity', 'data.message',
     'data.event_time', 'data.route', 'data.deployment_url', 'data.win',
-    'data.reason', 'data.fingerprint', 'data.count', 'data.observed', 'data.limit', 'data.window_sec', 'data.window_min',
+    'data.reason', 'data.fingerprint', 'data.count', 'data.observed', 'data.limit', 'data.window_sec', 'data.unique_paths', 'data.sample_paths', 'data.window_min',
     'data.payload_bytes', 'data.payload_limit', 'data.matched_pattern', 'data.simulation',
     'data.actor_role', 'data.target_type', 'data.target_id', 'data.requested_role', 'data.http_status'
   )
@@ -81,6 +81,8 @@ foreach ($hit in $response.hits.hits) {
     observed = if ($null -ne $s.data.observed) { [int]$s.data.observed } else { $null }
     limit = if ($null -ne $s.data.limit) { [int]$s.data.limit } else { $null }
     window_sec = if ($null -ne $s.data.window_sec) { [int]$s.data.window_sec } else { $null }
+    unique_paths = if ($null -ne $s.data.unique_paths) { [int]$s.data.unique_paths } else { $null }
+    sample_paths = [string]$s.data.sample_paths
     window_min = if ($null -ne $s.data.window_min) { [int]$s.data.window_min } else { $null }
     payload_bytes = if ($null -ne $s.data.payload_bytes) { [int]$s.data.payload_bytes } else { $null }
     payload_limit = if ($null -ne $s.data.payload_limit) { [int]$s.data.payload_limit } else { $null }
