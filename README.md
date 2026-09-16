@@ -38,7 +38,7 @@ flowchart LR
 - deploy/ contains credential-free Splunk and Wazuh examples.
 - cases/ contains sanitized incident and detection-quality writeups.
 - sample-data/ contains synthetic events for demonstrations.
-- docs/ contains the analyst workflow and architecture notes.
+- docs/ contains the analyst workflow, architecture notes, and the [case index](docs/case-index.md).
 
 ## Quick start
 

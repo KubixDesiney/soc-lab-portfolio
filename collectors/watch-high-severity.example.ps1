@@ -31,7 +31,7 @@ $body = @{
     'data.event_time', 'data.route', 'data.deployment_url', 'data.win',
     'data.reason', 'data.fingerprint', 'data.count', 'data.observed', 'data.limit', 'data.window_sec', 'data.unique_paths', 'data.sample_paths', 'data.attempts', 'data.unique_token_fingerprints', 'data.claim_errors', 'data.window_min',
     'data.payload_bytes', 'data.payload_limit', 'data.matched_pattern', 'data.simulation',
-    'data.actor_role', 'data.target_type', 'data.target_id', 'data.requested_role', 'data.http_status'
+    'data.actor_role', 'data.target_type', 'data.target_id', 'data.requested_role', 'data.http_status', 'data.origin', 'data.request_method', 'data.configured_host', 'data.target_host', 'data.payload_sample', 'data.expected_scheme'
   )
 } | ConvertTo-Json -Depth 20
 
@@ -96,6 +96,12 @@ foreach ($hit in $response.hits.hits) {
     target_id = [string]$s.data.target_id
     requested_role = [string]$s.data.requested_role
     http_status = if ($null -ne $s.data.http_status) { [int]$s.data.http_status } else { $null }
+    origin = [string]$s.data.origin
+    request_method = [string]$s.data.request_method
+    configured_host = [string]$s.data.configured_host
+    target_host = [string]$s.data.target_host
+    payload_sample = [string]$s.data.payload_sample
+    expected_scheme = [string]$s.data.expected_scheme
     win_event_id = [string]$win.system.eventID
     win_channel = [string]$win.system.channel
     image = [string]$win.eventdata.image
