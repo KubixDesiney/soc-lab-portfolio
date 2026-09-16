@@ -15,6 +15,11 @@ These sanitized cases record the exercise scope, evidence, analyst decision, and
 - [SIAS CSRF-style state-change simulation](../cases/sias-csrf-simulation-20260916.md)
 - [SIAS webhook-authentication simulation](../cases/sias-webhook-auth-simulation-20260916.md)
 - [SIAS connector host-binding simulation](../cases/sias-connector-host-binding-simulation-20260916.md)
+- [SIAS alert-flood simulation](../cases/sias-alert-flood-simulation-20260916.md)
+- [SIAS malformed-payload simulation](../cases/sias-malformed-payload-simulation-20260916.md)
+- [SIAS SIEM export dead-letter simulation](../cases/sias-siem-export-deadletter-simulation-20260916.md)
+- [SIAS notification-backlog simulation](../cases/sias-notification-backlog-simulation-20260916.md)
+- [SIAS sensitive-output guard simulation](../cases/sias-sensitive-output-simulation-20260916.md)
 
 ## Windows and cloud detections
 
