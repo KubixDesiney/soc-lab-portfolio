@@ -30,7 +30,8 @@ $body = @{
     'data.action', 'data.outcome', 'data.severity', 'data.message',
     'data.event_time', 'data.route', 'data.deployment_url', 'data.win',
     'data.reason', 'data.fingerprint', 'data.count', 'data.window_min',
-    'data.payload_bytes', 'data.payload_limit', 'data.matched_pattern', 'data.simulation'
+    'data.payload_bytes', 'data.payload_limit', 'data.matched_pattern', 'data.simulation',
+    'data.actor_role', 'data.target_type', 'data.target_id', 'data.requested_role', 'data.http_status'
   )
 } | ConvertTo-Json -Depth 20
 
@@ -82,6 +83,11 @@ foreach ($hit in $response.hits.hits) {
     payload_limit = if ($null -ne $s.data.payload_limit) { [int]$s.data.payload_limit } else { $null }
     matched_pattern = [string]$s.data.matched_pattern
     simulation = [string]$s.data.simulation
+    actor_role = [string]$s.data.actor_role
+    target_type = [string]$s.data.target_type
+    target_id = [string]$s.data.target_id
+    requested_role = [string]$s.data.requested_role
+    http_status = if ($null -ne $s.data.http_status) { [int]$s.data.http_status } else { $null }
     win_event_id = [string]$win.system.eventID
     win_channel = [string]$win.system.channel
     image = [string]$win.eventdata.image
