@@ -29,7 +29,7 @@ $body = @{
     'rule.description', 'data.source', 'data.event_id', 'data.event_type',
     'data.action', 'data.outcome', 'data.severity', 'data.message',
     'data.event_time', 'data.route', 'data.deployment_url', 'data.win',
-    'data.reason', 'data.fingerprint', 'data.count', 'data.observed', 'data.limit', 'data.window_sec', 'data.unique_paths', 'data.sample_paths', 'data.window_min',
+    'data.reason', 'data.fingerprint', 'data.count', 'data.observed', 'data.limit', 'data.window_sec', 'data.unique_paths', 'data.sample_paths', 'data.attempts', 'data.unique_token_fingerprints', 'data.claim_errors', 'data.window_min',
     'data.payload_bytes', 'data.payload_limit', 'data.matched_pattern', 'data.simulation',
     'data.actor_role', 'data.target_type', 'data.target_id', 'data.requested_role', 'data.http_status'
   )
@@ -83,6 +83,9 @@ foreach ($hit in $response.hits.hits) {
     window_sec = if ($null -ne $s.data.window_sec) { [int]$s.data.window_sec } else { $null }
     unique_paths = if ($null -ne $s.data.unique_paths) { [int]$s.data.unique_paths } else { $null }
     sample_paths = [string]$s.data.sample_paths
+    attempts = if ($null -ne $s.data.attempts) { [int]$s.data.attempts } else { $null }
+    unique_token_fingerprints = if ($null -ne $s.data.unique_token_fingerprints) { [int]$s.data.unique_token_fingerprints } else { $null }
+    claim_errors = [string]$s.data.claim_errors
     window_min = if ($null -ne $s.data.window_min) { [int]$s.data.window_min } else { $null }
     payload_bytes = if ($null -ne $s.data.payload_bytes) { [int]$s.data.payload_bytes } else { $null }
     payload_limit = if ($null -ne $s.data.payload_limit) { [int]$s.data.payload_limit } else { $null }
