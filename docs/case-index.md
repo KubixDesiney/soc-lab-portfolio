@@ -2,6 +2,10 @@
 
 These sanitized cases record the exercise scope, evidence, analyst decision, and validation search. All SIAS exercises use development telemetry and local-only canaries.
 
+## Cross-source drills
+
+- [Cross-source application incident drill](../cases/cross-source-incident-drill-20260916.md)
+
 ## SIAS application and API controls
 
 - [SIAS role-change authorization](../cases/sias-purple-team-role-change-20260915.md)

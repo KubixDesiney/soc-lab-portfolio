@@ -32,6 +32,21 @@
   </row>
   <row>
     <panel>
+      <title>Correlated incidents (incident ID)</title>
+      <table>
+        <search>
+          <query>index=main sourcetype=soc:wazuh:alert incident_id=* | stats earliest(_time) as first_seen latest(_time) as last_seen count values(event_id) as event_ids values(event_type) as event_types values(rule_id) as rules values(rule_level) as levels values(agent) as agents by incident_id | sort - last_seen | table first_seen last_seen incident_id count event_ids event_types rules levels agents</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">20</option>
+        <option name="drilldown">row</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <title>Open triage queue (non-synthetic, level 12+)</title>
       <table>
         <search>

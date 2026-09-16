@@ -28,7 +28,7 @@ $body = @{
     '@timestamp', 'timestamp', 'agent.name', 'agent.id', 'rule.id', 'rule.level',
     'rule.description', 'data.source', 'data.event_id', 'data.event_type',
     'data.action', 'data.outcome', 'data.severity', 'data.message',
-    'data.event_time', 'data.route', 'data.deployment_url', 'data.win',
+    'data.event_time', 'data.incident_id', 'data.route', 'data.deployment_url', 'data.win',
     'data.reason', 'data.fingerprint', 'data.count', 'data.observed', 'data.limit', 'data.window_sec', 'data.unique_paths', 'data.sample_paths', 'data.attempts', 'data.unique_token_fingerprints', 'data.claim_errors', 'data.window_min',
     'data.payload_bytes', 'data.payload_limit', 'data.matched_pattern', 'data.simulation',
     'data.actor_role', 'data.target_type', 'data.target_id', 'data.requested_role', 'data.http_status', 'data.origin', 'data.request_method', 'data.configured_host', 'data.target_host', 'data.payload_sample', 'data.expected_scheme'
@@ -73,6 +73,7 @@ foreach ($hit in $response.hits.hits) {
     severity = [string]$s.data.severity
     message = [string]$s.data.message
     producer_time = [string]$s.data.event_time
+    incident_id = [string]$s.data.incident_id
     route = [string]$s.data.route
     deployment_url = [string]$s.data.deployment_url
     reason = [string]$s.data.reason
